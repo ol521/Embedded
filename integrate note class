@@ -2,7 +2,6 @@
 #include <U8g2lib.h>
 #include <bitset>
 #include <STM32FreeRTOS.h>
-#include <vector>
 
 //Constants
   const uint32_t interval = 100; //Display update interval
@@ -86,16 +85,37 @@ public:
   }
 
 };
-// std::vector<note> noteList;
-// noteList.push_back(note("C", 50953930));
-// noteList.push_back(note("G", 76528508));
-note noteC("C",50953930);
-note noteG("G",76528508);
+
+
+note C("C",50953930);
+note Cs("C#",54077543);
+note D("D",57201155);
+note Ds("D#",60715220);
+note E("E",64229284);
+note Fnmb("F",68133799);
+note Fs("F#",72038315);
+note G("G",76528508);
+note Gs("G#",81018701);
+note A("A",85899346);
+note As("A#",90975216);
+note B("B",96246313);
+
+
 
 
 void sampleISR() {
-  int32_t Vout = noteC.updatePhase();
-  Vout += noteG.updatePhase();
+  int32_t Vout = C.updatePhase();
+  Vout += Cs.updatePhase();
+  Vout += D.updatePhase();
+  Vout += Ds.updatePhase();
+  Vout += E.updatePhase();
+  Vout += Fnmb.updatePhase();
+  Vout += Fs.updatePhase();
+  Vout += G.updatePhase();
+  Vout += Gs.updatePhase();
+  Vout += A.updatePhase();
+  Vout += As.updatePhase();
+  Vout += B.updatePhase();
   Vout = Vout >> (8 - sysState.knob_rotate);
   analogWrite(OUTR_PIN, Vout + 128);
 }
@@ -210,8 +230,19 @@ void scanKeysTask(void * pvParameters) {
       
       counter += 4;
     }
-    noteC.press(!inputs[0]);
-    noteG.press(!inputs[7]);
+    C.press(!inputs[0]);
+    Cs.press(!inputs[1]);
+    D.press(!inputs[2]);
+    Ds.press(!inputs[3]);
+    E.press(!inputs[4]);
+    Fnmb.press(!inputs[5]);
+    Fs.press(!inputs[6]);
+    G.press(!inputs[7]);
+    Gs.press(!inputs[8]);
+    A.press(!inputs[9]);
+    As.press(!inputs[10]);
+    B.press(!inputs[11]);
+
     
     knob3.getdata();
     knob3.direction(inputs[12],inputs[13]);
