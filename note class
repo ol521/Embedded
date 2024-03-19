@@ -1,0 +1,25 @@
+const uint32_t stepSizes [13] = {50953930 ,54077543 ,57201155 ,60715220 ,64229284 ,68133799 ,72038315 ,76528508 ,81018701 ,85899346 ,90975216,96246313,0};
+class note{
+private: 
+  int mem_stepSize;
+  int mem_phase = 0;
+  const char* mem_note;
+  int32_t mem_vout = 0;
+
+public:
+  note(const char* note, int stepSizes){
+    mem_note = note;
+    mem_stepSize = stepSizes;
+  }
+
+    void updatePhase(int i){
+      if(i) mem_phase += mem_stepSize;
+      else mem_phase = 0;
+      mem_vout = (mem_phase >> 24) - 128;
+    }
+
+    int outputVout(){
+      return mem_vout;
+    }
+};
+note noteC("C",50953930);
